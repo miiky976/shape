@@ -11,8 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.miiky.shape.components.ShapeCanvas
-import com.miiky.shape.screens.LineCords
+import com.miiky.shape.ui.screens.LineScreen
 import com.miiky.shape.ui.theme.ShapeTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ShapeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LineCords(modifier = Modifier.padding(innerPadding))
+                    LineScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }

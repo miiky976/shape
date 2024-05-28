@@ -1,11 +1,14 @@
-package com.miiky.shape.screens
+package com.miiky.shape.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.ArrowDropUp
@@ -15,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,13 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.miiky.shape.R
-import com.miiky.shape.components.NumberTextInput
-import com.miiky.shape.components.ShapeCanvas
-import com.miiky.shape.methods.Line
+import com.miiky.shape.ui.components.NumberTextInput
+import com.miiky.shape.ui.components.ShapeCanvas
+import com.miiky.shape.methods.line
 import com.miiky.shape.models.Cords
 
 @Composable
-fun LineCords(modifier: Modifier = Modifier) {
+fun LineScreen(modifier: Modifier = Modifier) {
 	val hidden = remember { mutableStateOf(true) }
 
 	// Cords stuff
@@ -40,18 +44,15 @@ fun LineCords(modifier: Modifier = Modifier) {
 	val startY = remember { mutableIntStateOf(-10) }
 	val endX = remember { mutableIntStateOf(20) }
 	val endY = remember { mutableIntStateOf(-9) }
-	val start = remember {
-		mutableStateOf(Cords(startX.intValue, startY.intValue))
-	}
-	val end = remember {
-		mutableStateOf(Cords(endX.intValue, endY.intValue))
-	}
 	var list = remember {
-		Line(start.value, end.value)
+		line(Cords(startX.intValue, startY.intValue), Cords(endX.intValue, endY.intValue))
 	}
 	val selected = remember { mutableIntStateOf(0) }
 	fun update() {
-		list = Line(start.value, end.value)
+		selected.intValue = list.size -1
+		list.clear()
+		list = line(Cords(startX.intValue, startY.intValue), Cords(endX.intValue, endY.intValue))
+		selected.intValue = 0
 	}
 	Column(
 		modifier = modifier
@@ -74,11 +75,7 @@ fun LineCords(modifier: Modifier = Modifier) {
 			}
 		}
 		ElevatedCard(
-			modifier = if (hidden.value) {
-				Modifier.weight(1f)
-			} else {
-				Modifier.fillMaxWidth()
-			},
+			modifier = Modifier
 		) {
 			Row(
 				modifier = Modifier
@@ -87,13 +84,20 @@ fun LineCords(modifier: Modifier = Modifier) {
 						hidden.value = !hidden.value
 					}
 			) {
-				Text(
-					text = "blocks: " + list.size + " ; " + list[selected.intValue].toString(),
+				Column(
 					modifier = Modifier
+						.weight(1f)
 						.align(Alignment.CenterVertically)
 						.padding(24.dp)
-						.weight(1f)
-				)
+				) {
+					Text(
+						text = stringResource(id = R.string.blocks) + ": " + list.size,
+					)
+					Text(
+						style = MaterialTheme.typography.headlineMedium,
+						text = "X: ${list[selected.intValue].x} Y: ${list[selected.intValue].y}"
+					)
+				}
 				Icon(
 					if (!hidden.value) Icons.Rounded.ArrowDropDown else Icons.Rounded.ArrowDropUp, contentDescription = null,
 					modifier = Modifier
@@ -101,9 +105,8 @@ fun LineCords(modifier: Modifier = Modifier) {
 						.padding(24.dp)
 				)
 			}
-			if (hidden.value) {
+			AnimatedVisibility(hidden.value, modifier = Modifier.weight(1f, fill = false)) {
 				ShapeCanvas(
-					modifier = Modifier.weight(1f),
 					cords = list,
 					selected = list[selected.intValue]
 				)

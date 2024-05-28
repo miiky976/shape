@@ -1,5 +1,5 @@
 // @formatter:on
-package com.miiky.shape.components
+package com.miiky.shape.ui.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.rememberTransformableState

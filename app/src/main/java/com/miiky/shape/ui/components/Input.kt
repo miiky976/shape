@@ -1,4 +1,4 @@
-package com.miiky.shape.components
+package com.miiky.shape.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.miiky.shape.R
 
@@ -21,33 +22,45 @@ fun NumberTextInput(
 	modifier: Modifier = Modifier,
 	number: MutableIntState,
 	steps: Int = 1,
-	label: String
+	label: String,
 ) {
+	val numberRegex = """^-?\d*$""".toRegex()
+
 	OutlinedTextField(
 		value = number.intValue.toString(),
 		onValueChange = {
-			if (it.isNotEmpty()) {
-				number.intValue = it.toInt()
+			if (it.isEmpty() || it == "-") {
+				number.intValue = 0
+				return@OutlinedTextField
+			}
+			if (numberRegex.matches(it)) {
+				number.intValue = it.filter { char -> char.isDigit() || char == '-' || char == '+' }.toInt()
 				return@OutlinedTextField
 			} else {
-				number.intValue = 0
+				number.intValue = number.intValue
+				return@OutlinedTextField
 			}
 		},
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 		label = { Text(text = label) },
 		trailingIcon = {
-			IconButton(onClick = { number.intValue += steps}) {
+			IconButton(onClick = {
+				number.intValue += steps
+			}) {
 				Icon(Icons.Rounded.Add, contentDescription = stringResource(id = R.string.add))
 			}
 		},
 		leadingIcon = {
-			IconButton(onClick = { number.intValue -= steps}) {
+			IconButton(onClick = {
+				number.intValue -= steps
+			}) {
 				Icon(
 					Icons.Rounded.Remove,
 					contentDescription = stringResource(id = R.string.subtract)
 				)
 			}
 		},
-		modifier = modifier
+		modifier = modifier,
+		singleLine = true
 	)
 }
