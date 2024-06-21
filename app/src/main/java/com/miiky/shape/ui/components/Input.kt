@@ -1,6 +1,5 @@
 package com.miiky.shape.ui.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.miiky.shape.R
 
@@ -29,16 +27,10 @@ fun NumberTextInput(
 	OutlinedTextField(
 		value = number.intValue.toString(),
 		onValueChange = {
-			if (it.isEmpty() || it == "-") {
-				number.intValue = 0
-				return@OutlinedTextField
-			}
-			if (numberRegex.matches(it)) {
-				number.intValue = it.filter { char -> char.isDigit() || char == '-' || char == '+' }.toInt()
-				return@OutlinedTextField
-			} else {
-				number.intValue = number.intValue
-				return@OutlinedTextField
+			try {
+				number.intValue = it.toInt()
+			} catch (_: Exception) {
+
 			}
 		},
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

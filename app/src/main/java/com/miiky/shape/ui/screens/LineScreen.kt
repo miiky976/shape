@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.ArrowDropUp
@@ -30,10 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.miiky.shape.R
-import com.miiky.shape.ui.components.NumberTextInput
-import com.miiky.shape.ui.components.ShapeCanvas
 import com.miiky.shape.methods.line
 import com.miiky.shape.models.Cords
+import com.miiky.shape.ui.components.NumberTextInput
+import com.miiky.shape.ui.components.ShapeCanvas
 
 @Composable
 fun LineScreen(modifier: Modifier = Modifier) {
@@ -49,7 +47,7 @@ fun LineScreen(modifier: Modifier = Modifier) {
 	}
 	val selected = remember { mutableIntStateOf(0) }
 	fun update() {
-		selected.intValue = list.size -1
+		selected.intValue = list.size - 1
 		list.clear()
 		list = line(Cords(startX.intValue, startY.intValue), Cords(endX.intValue, endY.intValue))
 		selected.intValue = 0
@@ -99,7 +97,8 @@ fun LineScreen(modifier: Modifier = Modifier) {
 					)
 				}
 				Icon(
-					if (!hidden.value) Icons.Rounded.ArrowDropDown else Icons.Rounded.ArrowDropUp, contentDescription = null,
+					if (!hidden.value) Icons.Rounded.ArrowDropDown else Icons.Rounded.ArrowDropUp,
+					contentDescription = null,
 					modifier = Modifier
 						.align(Alignment.CenterVertically)
 						.padding(24.dp)

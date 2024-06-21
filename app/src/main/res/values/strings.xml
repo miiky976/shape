@@ -11,5 +11,13 @@
     <string name="prevItem">Previous item</string>
     <string name="blocks">Blocks</string>
     <string name="cords">Cords</string>
+    <string name="diameter">Diameter</string>
+
+    <!--  Shapes  -->
+    <string name="circle">Circle</string>
+    <string name="line">Line</string>
+    <string name="prisms">Prisms</string>
+
+    <!--  Funny and spanish dependant notes  -->
     <string name="nomames">No te pases de verga hijo de tu reputisima madre, como vas a poner esa cantidad</string>
 </resources>

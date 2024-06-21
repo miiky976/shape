@@ -69,4 +69,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // No mamen hijos de su puta madre los odio por no tener todooooo
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.navigation.compose)
 }
