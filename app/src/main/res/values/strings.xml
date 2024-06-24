@@ -11,7 +11,10 @@
     <string name="prevItem">Previous item</string>
     <string name="blocks">Blocks</string>
     <string name="cords">Cords</string>
+    <string name="hide">Hide</string>
     <string name="diameter">Diameter</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
     <!--  Shapes  -->
     <string name="circle">Circle</string>

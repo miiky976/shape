@@ -6,11 +6,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.Workspaces
 import androidx.compose.material.icons.rounded.Circle
-import androidx.compose.material.icons.rounded.Commit
-import androidx.compose.material.icons.rounded.RadioButtonChecked
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material.icons.rounded.Workspaces
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -26,10 +24,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.miiky.shape.R
 import com.miiky.shape.models.NavItem
+import com.miiky.shape.ui.navigator.ShapeNavItems
 import com.miiky.shape.ui.navigator.ShapesNavigator
 import kotlinx.coroutines.launch
 
 // This function is supposed to handle all the main UI
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Master(modifier: Modifier = Modifier) {
 	val scope = rememberCoroutineScope()
@@ -39,29 +39,14 @@ fun Master(modifier: Modifier = Modifier) {
 
 	val drawer = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-	val navItems = listOf(
-		NavItem(
-			stringResource(id = R.string.circle),
-			"circle",
-			Icons.Outlined.Circle,
-			Icons.Rounded.Circle
-		),
-		NavItem(
-			stringResource(id = R.string.line),
-			"line",
-			Icons.Outlined.Workspaces,
-			Icons.Rounded.Workspaces
-		)
-	)
-
 	ModalNavigationDrawer(
 		drawerState = drawer,
 		drawerContent = {
 			ModalDrawerSheet {
-				navItems.forEach {
+				ShapeNavItems.forEach {
 					val selected = it.route == backStackEntry.value?.destination?.route
 					NavigationDrawerItem(
-						label = { Text(text = it.title) },
+						label = { Text(text = stringResource(id = it.titleResource)) },
 						selected = selected,
 						onClick = {
 							scope.launch {
