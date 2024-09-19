@@ -16,7 +16,6 @@ class LineViewModel : ViewModel() {
 	var list: LiveData<List<Cords>> = _list
 
 	fun createLineList() {
-		_list = MutableLiveData(line(_start.value, _end.value))
 	}
 
 }
